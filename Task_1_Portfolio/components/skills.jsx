@@ -4,6 +4,7 @@ import {
   FaJs,
   FaReact,
   FaNodeJs,
+  FaServer,
 } from "react-icons/fa";
 import { SiNextdotjs, SiTailwindcss, SiMongodb } from "react-icons/si";
 
@@ -37,6 +38,7 @@ export default function Skills() {
       title: "Backend",
       skills: [
         { name: "Node.js", icon: FaNodeJs },
+        { name: "Express.js", icon: FaServer },
         { name: "MongoDB", icon: SiMongodb },
       ],
       span: "md:col-span-2",
