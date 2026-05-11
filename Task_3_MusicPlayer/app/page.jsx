@@ -11,7 +11,7 @@ import Link from "next/link";
 export default function Home() {
   const session = useSession();
   return (
-    <div className="main flex h-screen overflow-hidden">
+    <div className="main bg-black flex h-screen overflow-hidden">
       <Navbar />
       <div className="flex-1 md:ml-[260px] overflow-y-auto pb-20 scrollbar-hide">
         <h1 className="text-2xl font-semibold text-[#E4E1E6] ml-5 mb-10 mt-10 px-5"> Welcome , <Link href="/profile" className="text-[#6FFBBE]">{session?.data?.user?.name}</Link></h1>
