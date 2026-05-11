@@ -3,7 +3,7 @@
 This repository contains all the tasks and projects completed during my internship at Rhombix Technologies. Each task is organized into separate folders for clarity and ease of navigation.
 
 
-## 📁 Repository Structure
+## 📁 $Repository Structure$
 
 * **Task_1_Portfolio** – A personal portfolio website built using Next.js and Tailwind CSS.
 * **Task_2_TodoList** – A to-do list application that helps manage everyday tasks.
