@@ -45,7 +45,7 @@ export default function RecentlyPlayed({ showSeeMore = false }) {
     }, []);
 
     return (
-        <div className="w-full flex flex-col flex-wrap py-5 px-10 gap-8">
+        <div className="w-screen flex flex-col flex-wrap py-5 px-10 gap-8">
             <div className="flex items-center justify-between">
                 <h1 className="text-2xl font-bold text-white">Recently Played</h1>
                 {showSeeMore && (
