@@ -28,7 +28,6 @@ export default function RecentlyPlayed({ showSeeMore = false }) {
                 }
 
                 const data = await res.json();
-                // If it's the paginated response
                 if (data.songs) {
                     setSongs(data.songs);
                 } else {
@@ -45,7 +44,7 @@ export default function RecentlyPlayed({ showSeeMore = false }) {
     }, []);
 
     return (
-        <div className="w-screen flex flex-col flex-wrap py-5 px-10 gap-8">
+        <div className="w-screen h-full flex flex-col flex-wrap py-5 px-10 gap-8">
             <div className="flex items-center justify-between">
                 <h1 className="text-2xl font-bold text-white">Recently Played</h1>
                 {showSeeMore && (
@@ -60,14 +59,14 @@ export default function RecentlyPlayed({ showSeeMore = false }) {
             ) : songs.length === 0 ? (
                 <p className="text-zinc-400">No recent songs.</p>
             ) : (
-                <div className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide">
+                <div className="flex flew-wrap gap-6">
                     {songs.map((song) => (
                         <div
                             key={song._id}
                             onClick={() => handlePlay(song)}
                             className="flex flex-col gap-4 min-w-[128px] cursor-pointer group"
                         >
-                            <div className="relative w-32 h-32 overflow-hidden rounded-md">
+                            <div className="relative h:20 w:20 md:w-32 md:h-32 overflow-hidden rounded-md">
                                 <Image
                                     fill
                                     className="object-cover transition group-hover:scale-105"
@@ -75,8 +74,8 @@ export default function RecentlyPlayed({ showSeeMore = false }) {
                                     alt={song.title}
                                 />
                             </div>
-                            <p className="text-white text-sm font-semibold truncate w-32">{song.title}</p>
-                            <p className="text-zinc-400 text-xs truncate w-32">{song.artist}</p>
+                            <p className="text-white text-sm font-semibold truncate w-20 md:w-32">{song.title}</p>
+                            <p className="text-zinc-400 text-xs truncate w:20 md:w-32">{song.artist}</p>
                         </div>
                     ))}
                 </div>
