@@ -17,7 +17,7 @@ export default function Home() {
         <h1 className="text-2xl font-semibold text-[#E4E1E6] ml-5 mb-10 mt-10 px-5"> Welcome , <Link href="/profile" className="text-[#6FFBBE]">{session?.data?.user?.name}</Link></h1>
 
         <div className="flex flex-col gap-10">
-          <RecentlyPlayed showSeeMore={true} />
+          <RecentlyPlayed showSeeMore={true} limit={3} />
           <NewReleases showSeeMore={true} limit={5} />
           <Artists showSeeMore={true} limit={6} />
           <Trending showSeeMore={true} limit={5} />
