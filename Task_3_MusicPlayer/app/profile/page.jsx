@@ -23,7 +23,7 @@ import Footer from '@/components/Footer';
 
 export default function Profile() {
     const router = useRouter();
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
 
     const [songs, setSongs] = useState([]);
     const [loadingSongs, setLoadingSongs] = useState(true);
@@ -37,6 +37,13 @@ export default function Profile() {
     const [addToPlaylistId, setAddToPlaylistId] = useState(null);
 
     const { currentSong, isPlaying, playSong, setQueue } = usePlayer();
+
+    // Check if user is authenticated
+    useEffect(() => {
+        if (status === 'unauthenticated') {
+            router.push('/login');
+        }
+    }, [status, router]);
 
     // Fetch songs
     useEffect(() => {
@@ -107,6 +114,20 @@ export default function Profile() {
         setQueue(songs);
         router.push(`/Music/${song._id}?play=true`);
     };
+
+    // Show loading state while checking authentication
+    if (status === 'loading') {
+        return (
+            <div className="min-h-screen bg-black text-white flex items-center justify-center">
+                <p className="text-zinc-400">Loading...</p>
+            </div>
+        );
+    }
+
+    // Redirect to login if not authenticated
+    if (status === 'unauthenticated') {
+        return null;
+    }
 
     return (
         <div className="min-h-screen bg-black text-white overflow-hidden">
