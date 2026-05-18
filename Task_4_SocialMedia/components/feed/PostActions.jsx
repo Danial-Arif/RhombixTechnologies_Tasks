@@ -246,7 +246,7 @@ export default function PostActions({ post, onDeletePost }) {
 
                     {/* New comment input */}
                     {userId && (
-                        <div className="flex items-center gap-2 pt-2">
+                        <div className="flex items-center gap-2 pt-4">
                             <Input
                                 type="text"
                                 value={commentText}
