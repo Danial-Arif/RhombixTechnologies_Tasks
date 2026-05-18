@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 
-export default function PostActions({ post }) {
+export default function PostActions({ post, onDeletePost }) {
     const { data: session } = useSession()
     const userId = session?.user?.id
 
@@ -24,6 +24,9 @@ export default function PostActions({ post }) {
 
     // Share
     const [shareLabel, setShareLabel] = useState("Share")
+
+    // Delete
+    const [deleteLoading, setDeleteLoading] = useState(false)
 
     // ── Like ──────────────────────────────────────────────
     const handleLike = async () => {
@@ -118,43 +121,91 @@ export default function PostActions({ post }) {
         }
     }
 
+    // ── Delete Post ────────────────────────────────────────
+    const handleDeletePost = async () => {
+        if (!userId || deleteLoading) return
+        if (!confirm("Are you sure you want to delete this post?")) return
+        
+        setDeleteLoading(true)
+        try {
+            const res = await fetch(`/api/posts/${post._id}`, {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ userId }),
+            })
+
+            if (res.ok) {
+                if (onDeletePost) {
+                    onDeletePost(post._id)
+                }
+            } else {
+                alert("Failed to delete post")
+            }
+        } catch (err) {
+            console.error("Delete post failed:", err)
+            alert("An error occurred while deleting the post")
+        } finally {
+            setDeleteLoading(false)
+        }
+    }
+
+    const isPostAuthor = post.author?._id === userId || post.author === userId
+
     return (
         <div className="w-full">
             {/* Action buttons */}
-            <div className="flex items-center gap-2 text-muted-foreground">
-                <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleLike}
-                    disabled={!userId || likeLoading}
-                    className={`flex items-center gap-1.5 hover:text-red-500 transition-colors group ${liked ? "text-red-500 hover:bg-red-500/10" : ""}`}
-                >
-                    <Heart
-                        size={18}
-                        className={`transition-all ${liked ? "fill-red-500 scale-110" : "group-hover:scale-110"}`}
-                    />
-                    <span>{likesCount}</span>
-                </Button>
+            <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 text-muted-foreground">
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={handleLike}
+                        disabled={!userId || likeLoading}
+                        className={`flex items-center gap-1.5 hover:text-red-500 transition-colors group ${liked ? "text-red-500 hover:bg-red-500/10" : ""}`}
+                    >
+                        <Heart
+                            size={18}
+                            className={`transition-all ${liked ? "fill-red-500 scale-110" : "group-hover:scale-110"}`}
+                        />
+                        <span>{likesCount}</span>
+                    </Button>
 
-                <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setShowComments((prev) => !prev)}
-                    className="flex items-center gap-1.5 hover:text-primary transition-colors group"
-                >
-                    <MessageCircle size={18} className="group-hover:scale-110 transition-transform" />
-                    <span>{comments.length}</span>
-                </Button>
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => setShowComments((prev) => !prev)}
+                        className="flex items-center gap-1.5 hover:text-primary transition-colors group"
+                    >
+                        <MessageCircle size={18} className="group-hover:scale-110 transition-transform" />
+                        <span>{comments.length}</span>
+                    </Button>
 
-                <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleShare}
-                    className="flex items-center gap-1.5 hover:text-blue-500 transition-colors group"
-                >
-                    <Share2 size={18} className="group-hover:scale-110 transition-transform" />
-                    <span>{shareLabel}</span>
-                </Button>
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={handleShare}
+                        className="flex items-center gap-1.5 hover:text-blue-500 transition-colors group"
+                    >
+                        <Share2 size={18} className="group-hover:scale-110 transition-transform" />
+                        <span>{shareLabel}</span>
+                    </Button>
+                </div>
+
+                {isPostAuthor && (
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={handleDeletePost}
+                        disabled={deleteLoading}
+                        className="h-9 w-9 text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-all"
+                    >
+                        {deleteLoading ? (
+                            <Loader2 size={18} className="animate-spin" />
+                        ) : (
+                            <Trash2 size={18} />
+                        )}
+                    </Button>
+                )}
             </div>
 
             {/* Comments section */}
