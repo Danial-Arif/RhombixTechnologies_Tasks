@@ -154,8 +154,8 @@ export default function PostActions({ post, onDeletePost }) {
     return (
         <div className="w-full">
             {/* Action buttons */}
-            <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 pt-2 text-muted-foreground">
+            <div className="flex items-center justify-between py-2">
+                <div className="flex items-center gap-2  text-muted-foreground">
                     <Button
                         variant="ghost"
                         size="sm"
