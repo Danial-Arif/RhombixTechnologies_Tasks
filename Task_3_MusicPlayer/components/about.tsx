@@ -38,26 +38,10 @@ export default function About({
                         <h1 className="break-words text-4xl font-extrabold leading-tight md:text-4xl">
                             {session?.user?.name || 'Guest'}
                         </h1>
-
-                        <div className="mt-4 flex flex-wrap items-center justify-center gap-4 text-sm text-zinc-300 md:justify-start">
-                            <span className="flex items-center gap-2">
-                                <Music2 size={16} />
-                                128 playlists
-                            </span>
-
-                            <span className="flex items-center gap-2">
-                                <Heart size={16} />
-                                2.4k liked songs
-                            </span>
-                        </div>
                     </div>
                 </div>
 
-                {/* Edit Button */}
-                <button className="flex items-center justify-center gap-2 rounded-full bg-white/10 px-5 py-3 text-sm font-medium backdrop-blur-md transition hover:bg-white/20">
-                    <Settings size={18} />
-                    Edit Profile
-                </button>
+              
             </div>
         </section>
     );
