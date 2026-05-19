@@ -23,7 +23,7 @@ export default function LoginPage() {
 
                 {/* Logo */}
                 <h1 className="text-3xl font-bold text-[#6FFBBE]">
-                    Pulse Music
+                    My Music
                 </h1>
 
                 <p className="text-gray-400 text-sm">
